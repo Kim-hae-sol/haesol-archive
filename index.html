@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HAESOL — Personal Design Archive</title>
+<style>
+:root{--bg:#f5f3ee;--ink:#171717;--muted:#77736c;--line:#d9d5cd;--card:#ebe8e1;--accent:#e9c6c9}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}a{color:inherit;text-decoration:none}
+header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:22px 5vw;background:rgba(245,243,238,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(217,213,205,.6)}
+.logo{font-weight:800;letter-spacing:.08em}.nav{display:flex;gap:28px;font-size:13px}.nav a:hover{opacity:.5}
+main{padding:130px 5vw 80px}.hero{min-height:72vh;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line)}
+.kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}.hero h1{font-size:clamp(52px,10vw,150px);line-height:.88;letter-spacing:-.07em;margin:0;max-width:900px}.hero p{font-size:18px;line-height:1.65;max-width:520px;margin:38px 0 0;color:#4f4b45}
+.section{padding:110px 0;border-bottom:1px solid var(--line)}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:34px}.section h2{font-size:42px;letter-spacing:-.05em;margin:0}.section-note{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.card{background:var(--card);min-height:340px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s}.card:hover{transform:translateY(-5px)}.card .num{font-size:12px;color:var(--muted)}.card h3{font-size:32px;letter-spacing:-.04em;margin:10px 0}.card p{color:#625e57;line-height:1.55;margin:0}.tag{display:inline-block;margin-top:18px;padding:7px 10px;border:1px solid #c9c4bb;border-radius:999px;font-size:11px}
+.archive .card:nth-child(2){background:#ded9d1}.archive .card:nth-child(3){background:#e5d1d2}.archive .card:nth-child(4){background:#d9ded9}
+.scraps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.scrap{aspect-ratio:1/1;background:#dedbd4;padding:22px;display:flex;flex-direction:column;justify-content:flex-end}.scrap:nth-child(2){background:#e4d4d6}.scrap:nth-child(3){background:#d7d9d5}.scrap .label{font-size:11px;color:var(--muted);margin-bottom:8px}.scrap strong{font-size:22px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:60px}.about p{font-size:22px;line-height:1.6;letter-spacing:-.03em}.meta{border-top:1px solid var(--line)}.meta div{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);font-size:13px}.meta span:first-child{color:var(--muted)}
+footer{padding:30px 5vw;display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+@media(max-width:700px){header{padding:18px 5vw}.nav{gap:12px;font-size:11px}main{padding-top:105px}.hero{min-height:65vh}.hero h1{font-size:68px}.grid,.about{grid-template-columns:1fr}.scraps{grid-template-columns:repeat(2,1fr)}.section{padding:75px 0}.section h2{font-size:34px}.card{min-height:280px}}
+
+.image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:45px}.image-placeholder{aspect-ratio:4/3;background:#dedbd4;border:1px dashed #aaa59c;display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;letter-spacing:.12em;color:#77736c}.image-placeholder small{display:block;font-size:10px;letter-spacing:0;margin-top:8px}.detail-copy{font-size:22px;line-height:1.6;max-width:650px}.back{display:inline-block;margin-top:40px;font-size:12px;letter-spacing:.08em;color:var(--muted)}
+@media(max-width:700px){.image-grid{grid-template-columns:1fr}.detail-copy{font-size:18px}}
+.section-intro{max-width:650px;font-size:17px;line-height:1.7;color:#625e57;margin:-8px 0 34px}.empty-box{min-height:230px;border:1px dashed #aaa59c;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;color:#77736c}.empty-box span{font-size:10px;letter-spacing:.18em}.empty-box strong{font-size:18px;font-weight:500;color:#4f4b45}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="#">HAESOL</a>
+<nav class="nav">
+<a href="#portfolio">PORTFOLIO</a><a href="#personal">PERSONAL</a><a href="#fan">FAN</a><a href="#scrapbook">SCRAPBOOK</a><a href="#about">ABOUT</a>
+</nav>
+</header>
+<main>
+<section class="hero">
+<div class="kicker">Personal Design Archive / 2026</div>
+<h1>HAESOL<br>KIM</h1>
+<p>PRODUCT DESIGNER<br>나의 작업, 취향, 그리고 기록을 한곳에 모읍니다.</p>
+</section>
+
+<section class="section" id="portfolio">
+<div class="section-head"><h2>PORTFOLIO</h2><div class="section-note">FOR CAREER</div></div>
+<p class="section-intro">취업을 위해 정리한 프로젝트와 케이스 스터디를 모아두는 공간.</p>
+<div class="empty-box"><span>COMING LATER</span><strong>Career portfolio will be added here.</strong></div>
+</section>
+
+<section class="section" id="personal">
+<div class="section-head"><h2>PERSONAL</h2><div class="section-note">MY OWN WORK</div></div>
+<p class="section-intro">취업용 포트폴리오와는 별개로, 내가 만들고 싶어서 만든 작업들.</p>
+<div class="grid">
+<a class="card" href="#detail-personal"><div><div class="num">P01 / GRAPHIC</div><h3>PERSONAL WORKS</h3><p>그래픽, 편집, 브랜딩 등 개인적으로 만든 작업.</p></div><span class="tag">VIEW PROJECT →</span></a>
+<a class="card" href="#detail-goods"><div><div class="num">P02 / GOODS</div><h3>GOODS</h3><p>직접 기획하고 디자인한 작은 물건들.</p></div><span class="tag">VIEW PROJECT →</span></a>
+<a class="card" href="#detail-experiment"><div><div class="num">P03 / EXPERIMENT</div><h3>EXPERIMENTS</h3><p>완성도보다 시도 자체에 의미가 있는 디자인 실험.</p></div><span class="tag">VIEW PROJECT →</span></a>
+</div>
+</section>
+
+<section class="section" id="fan">
+<div class="section-head"><h2>FAN</h2><div class="section-note">FAN-MADE</div></div>
+<p class="section-intro">덕질하면서 만들고 기록한 것들을 따로 모아두는 공간.</p>
+<div class="grid">
+<a class="card" href="#detail-hnj"><div><div class="num">F01 / HNJ</div><h3>H.N.J ARCHIVE</h3><p>좋아하는 인터뷰와 순간을 작은 기록물로 재구성하는 프로젝트.</p></div><span class="tag">VIEW PROJECT →</span></a>
+</div>
+</section>
+
+<section class="section" id="scrapbook">
+<div class="section-head"><h2>SCRAPBOOK</h2><div class="section-note">THINGS I WANT TO REMEMBER</div></div>
+<p class="section-intro">좋았던 디자인과 이미지, 문장과 영감을 모아두는 나만의 스크랩북.</p>
+<div class="scraps">
+<div class="scrap"><div class="label">01 / TYPOGRAPHY</div><strong>좋아했던 타이포그래피</strong></div>
+<div class="scrap"><div class="label">02 / EDITORIAL</div><strong>마음에 남은 편집</strong></div>
+<div class="scrap"><div class="label">03 / UI/UX</div><strong>다시 보고 싶은 경험</strong></div>
+</div>
+</section>
+
+<section class="section detail" id="detail-personal">
+<div class="section-head"><h2>PERSONAL WORKS</h2><div class="section-note">PERSONAL / 2026</div></div>
+<div class="image-grid"><div class="image-placeholder">IMAGE 01<br><small>작업 대표 이미지를 넣는 공간</small></div><div class="image-placeholder">IMAGE 02<br><small>작업 이미지를 넣는 공간</small></div></div>
+<p class="detail-copy">개인 그래픽, 편집, 브랜딩 작업을 기록하는 공간.</p><a class="back" href="#personal">← BACK TO PERSONAL</a>
+</section>
+
+<section class="section detail" id="detail-goods">
+<div class="section-head"><h2>GOODS</h2><div class="section-note">PERSONAL / 2026</div></div>
+<div class="image-grid"><div class="image-placeholder">IMAGE 01<br><small>굿즈 사진을 넣는 공간</small></div><div class="image-placeholder">IMAGE 02<br><small>굿즈 사진을 넣는 공간</small></div></div>
+<p class="detail-copy">직접 기획하고 디자인한 작은 물건들을 모아두는 공간.</p><a class="back" href="#personal">← BACK TO PERSONAL</a>
+</section>
+
+<section class="section detail" id="detail-experiment">
+<div class="section-head"><h2>EXPERIMENTS</h2><div class="section-note">PERSONAL / 2026</div></div>
+<div class="image-grid"><div class="image-placeholder">IMAGE 01<br><small>실험 작업을 넣는 공간</small></div><div class="image-placeholder">IMAGE 02<br><small>실험 작업을 넣는 공간</small></div></div>
+<p class="detail-copy">완성된 포트폴리오에는 넣지 못한 디자인 실험과 시도를 자유롭게 기록.</p><a class="back" href="#personal">← BACK TO PERSONAL</a>
+</section>
+
+<section class="section detail" id="detail-hnj">
+<div class="section-head"><h2>H.N.J ARCHIVE</h2><div class="section-note">FAN-MADE / 2026</div></div>
+<div class="image-grid"><div class="image-placeholder">IMAGE 01<br><small>대표 이미지를 넣는 공간</small></div><div class="image-placeholder">IMAGE 02<br><small>디테일 이미지를 넣는 공간</small></div></div>
+<div class="about"><div><p>좋아하는 인터뷰의 문장과 순간을 선별해 작은 기록물로 재구성하는 개인 프로젝트.</p></div><div class="meta"><div><span>TYPE</span><span>Editorial · Goods</span></div><div><span>STATUS</span><span>Planning</span></div></div></div>
+<a class="back" href="#fan">← BACK TO FAN</a>
+</section>
+
+<section class="section" id="about">
+<div class="section-head"><h2>ABOUT</h2><div class="section-note">HELLO, I'M HAESOL</div></div>
+<div class="about">
+<div><p>관찰하는 것을 좋아하고, 마음에 남는 것들을 기록합니다. 작은 불편함에서 문제를 발견하고, 사람에게 더 좋은 경험이 무엇인지 고민하는 프로덕트 디자이너입니다.</p></div>
+<div class="meta">
+<div><span>ROLE</span><span>Product Designer</span></div>
+<div><span>TOOLS</span><span>Figma · Illustrator · Photoshop</span></div>
+<div><span>BASED IN</span><span>Korea</span></div>
+<div><span>CONTACT</span><span>hello@haesol.design</span></div>
+</div>
+</div>
+</section>
+</main>
+<footer><span>HAESOL — PERSONAL DESIGN ARCHIVE</span><span>© 2026</span></footer>
+</body></body>
+</html>
