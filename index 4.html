@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HAESOL · DESIGN LIST</title>
+<style>
+:root{
+  --bg:#fff;
+  --ink:#0a0a0a;
+  --muted:#777;
+  --line:#dedede;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",Arial,sans-serif;
+}
+button,a{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+.page{width:min(1480px,calc(100% - 80px));margin:0 auto}
+.header{
+  height:78px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between
+}
+.logo{font-size:16px;font-weight:700;letter-spacing:.06em}
+.nav{display:flex;gap:30px;font-size:11px;color:#555}
+.nav a{transition:color .2s}.nav a:hover{color:#000}
+
+.hero{padding:82px 0 58px}
+.hero h1{
+  margin:0;
+  font:400 clamp(58px,7.3vw,104px)/.92 Georgia,"Times New Roman",serif;
+  letter-spacing:-.055em
+}
+.hero p{margin:15px 0 0;font-size:13px;color:#5f5f5f}
+.hero-meta{
+  margin-top:24px;display:flex;justify-content:space-between;
+  color:#888;font-size:9px;letter-spacing:.11em
+}
+
+.file-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:48px;padding-bottom:108px
+}
+.file-card{cursor:pointer}
+.folder{
+  position:relative;height:340px;
+  transition:transform .22s ease,filter .22s ease
+}
+.file-card:hover .folder{transform:translateY(-6px);filter:drop-shadow(0 15px 22px rgba(0,0,0,.1))}
+
+.folder-shape{
+  position:absolute;inset:0;width:100%;height:100%
+}
+.folder-fill{fill:#090909}
+.folder-content{
+  position:absolute;inset:0;color:white;
+  padding:79px 31px 24px;
+  display:flex;flex-direction:column
+}
+.file-no{font-size:10px;letter-spacing:.14em;color:#a5a5a5}
+.file-title{
+  margin:14px 0 0;
+  font:400 31px/1 Georgia,"Times New Roman",serif;
+  letter-spacing:-.03em
+}
+.file-desc{
+  margin:24px 0 0;
+  font-size:13px;line-height:1.7;color:#c7c7c7;
+  max-width:325px
+}
+.file-bottom{
+  margin-top:auto;border-top:1px solid #393939;
+  padding-top:15px;
+  display:flex;align-items:center;justify-content:space-between;
+  color:#aaa;font-size:10px
+}
+.file-arrow{font-size:23px;color:white;line-height:1}
+
+.about{
+  border-top:1px solid var(--line);
+  padding:54px 0 66px;
+  display:grid;grid-template-columns:1.15fr .85fr;gap:85px
+}
+.about h2{margin:0 0 18px;font:400 34px/1 Georgia,"Times New Roman",serif}
+.about p{margin:0;max-width:700px;font-size:14px;line-height:1.9;color:#505050}
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.meta{border-top:1px solid var(--line);padding-top:11px}
+.meta span{display:block;font-size:9px;letter-spacing:.1em;color:#7d7d7d;margin-bottom:7px}
+.meta strong{font-size:12px;font-weight:500}
+
+.footer{
+  border-top:1px solid var(--line);
+  padding:23px 0 36px;
+  display:flex;justify-content:space-between;
+  font-size:9px;color:#737373
+}
+
+.modal{
+  position:fixed;inset:0;z-index:30;
+  background:rgba(255,255,255,.98);
+  opacity:0;pointer-events:none;
+  transition:opacity .24s ease;
+  overflow:auto
+}
+.modal.open{opacity:1;pointer-events:auto}
+.modal-inner{width:min(1180px,calc(100% - 70px));margin:0 auto;padding:38px 0 72px}
+.modal-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid var(--line);padding-bottom:19px
+}
+.modal-kicker{font-size:10px;letter-spacing:.12em;color:#777}
+.modal-head h2{
+  margin:10px 0 0;font:400 50px/1 Georgia,"Times New Roman",serif;
+  letter-spacing:-.04em
+}
+.close{border:0;background:transparent;font-size:31px;color:#444;padding:0 2px}
+.gallery{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;padding-top:30px
+}
+.gallery figure{margin:0;border:1px solid #ddd;background:#f5f5f5}
+.gallery img{width:100%;height:auto}
+.gallery img.tall{background:#0b0b0b}
+.modal-copy{
+  margin-top:29px;font-size:14px;line-height:1.9;color:#505050;max-width:760px
+}
+.modal-meta{
+  display:flex;gap:38px;margin-top:27px;padding-top:13px;
+  border-top:1px solid var(--line);
+  font-size:10px;color:#777;letter-spacing:.08em
+}
+
+@media(max-width:900px){
+  .page{width:min(100% - 44px,760px)}
+  .file-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .about{grid-template-columns:1fr;gap:42px}
+}
+@media(max-width:620px){
+  .page{width:calc(100% - 28px)}
+  .header{height:68px}
+  .nav{gap:14px;font-size:9px}
+  .hero{padding:55px 0 42px}
+  .hero h1{font-size:49px}
+  .file-grid{grid-template-columns:1fr;gap:30px;padding-bottom:72px}
+  .folder{height:315px}
+  .file-title{font-size:28px}
+  .meta-grid{grid-template-columns:1fr 1fr}
+  .gallery{grid-template-columns:1fr}
+  .modal-inner{width:calc(100% - 30px)}
+}
+
+/* Category archive viewer — draggable horizontal perspective carousel. */
+.archive-modebar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:21px 0 14px;border-bottom:1px solid var(--line)}
+.archive-modebar .label{font-size:10px;letter-spacing:.14em;color:#666;text-transform:uppercase}
+.archive-modebar .hint{font-size:10px;letter-spacing:.1em;color:#777}
+.archive-stage{position:relative;margin-top:0;height:clamp(455px,57vh,620px);min-height:430px;overflow:hidden;background:#efefed;isolation:isolate;perspective:1200px;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.archive-stage.dragging{cursor:grabbing}
+.archive-stage.dragging .archive-item{transition:none!important}
+.archive-item{position:absolute;left:50%;top:50%;display:flex;flex-direction:column;align-items:center;gap:13px;width:clamp(168px,22vw,260px);padding:0;border:0;background:transparent;color:#111;overflow:visible;cursor:grab;transform-origin:center center;transition:transform .55s cubic-bezier(.2,.78,.23,1),opacity .45s ease,filter .45s ease;will-change:transform,opacity;backface-visibility:hidden;-webkit-tap-highlight-color:transparent}
+.archive-item:active{cursor:grabbing}
+.archive-item:focus-visible{outline:2px solid #111;outline-offset:8px}
+.archive-item .card-art{display:block;width:100%;aspect-ratio:3/4;overflow:hidden;border:1px solid rgba(0,0,0,.06);border-radius:18px;background:#f8f8f6;box-shadow:0 22px 42px rgba(0,0,0,.12),0 3px 9px rgba(0,0,0,.05);transform:translateZ(0)}
+.archive-item img{display:block;width:100%;height:100%;object-fit:contain;background:#f8f8f6;pointer-events:none;-webkit-user-drag:none}
+.archive-item .archive-number{display:none}
+.archive-item .image-fallback{display:grid;place-items:center;width:100%;height:100%;background:#f2f2f0;color:#777;font-size:9px;letter-spacing:.1em}.archive-item .card-art.image-missing{display:grid;place-items:center}.archive-item .archive-caption{display:block;max-width:100%;padding:0 3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:500;letter-spacing:.13em;text-align:center;text-transform:uppercase;color:#333}
+.archive-stage-footer{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0 0;font-size:10px;color:#555;letter-spacing:.09em}
+.carousel-footer-left{display:flex;align-items:center;gap:18px;min-width:0}
+.carousel-arrow{flex:none;width:34px;height:34px;display:grid;place-items:center;border:1px solid #aaa;border-radius:50%;background:transparent;color:#111;font-size:17px;line-height:1;transition:background .2s,color .2s,border-color .2s}
+.carousel-arrow:hover{background:#111;color:#fff;border-color:#111}
+.carousel-progress{width:clamp(64px,12vw,150px);height:1px;background:#d2d2d0;position:relative;overflow:hidden}
+.carousel-progress span{display:block;width:0;height:1px;background:#111;transition:width .35s ease}
+.archive-stage-footer .drag-note{text-align:right;white-space:nowrap;color:#777;font-size:9px;letter-spacing:.13em}
+.archive-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;color:#777;font-size:12px;padding:24px}
+.archive-empty strong{font:400 28px Georgia,'Times New Roman',serif;color:#111}
+.archive-empty .mode-tab{display:inline-flex;border:1px solid #111;background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-size:10px;letter-spacing:.04em}
+/* Immersive work detail — editorial image viewer, not a product detail page. */
+.detail-overlay{position:fixed;inset:0;z-index:70;display:none;overflow:hidden;background:#fff;color:#0a0a0a}
+.detail-overlay.open{display:block}
+.detail-canvas{position:relative;width:100%;height:100vh;height:100svh;min-height:420px;overflow:hidden;background:#fff}
+.detail-top{position:absolute;left:clamp(20px,4vw,58px);right:clamp(20px,4vw,58px);top:clamp(16px,2.6vh,28px);z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px;pointer-events:none}
+.detail-top>*{pointer-events:auto}
+.detail-index{font-size:9px;letter-spacing:.15em;color:#666;text-transform:uppercase}
+.detail-close{border:0;background:transparent;color:#111;padding:8px 0;font-size:10px;letter-spacing:.12em}
+.detail-close:hover,.detail-back:hover{opacity:.58}
+.detail-artboard{position:absolute;inset:64px clamp(54px,7vw,110px) 126px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.detail-artboard img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.detail-side-arrow{position:absolute;top:50%;z-index:4;transform:translateY(-50%);width:38px;height:38px;display:grid;place-items:center;border:1px solid #d8d8d8;border-radius:50%;background:rgba(255,255,255,.88);color:#111;font-size:17px;line-height:1;transition:background .2s,color .2s,border-color .2s}
+.detail-side-arrow:hover{background:#111;color:#fff;border-color:#111}
+.detail-side-arrow:disabled{opacity:.25;cursor:default}
+.detail-side-arrow.prev{left:clamp(12px,2.3vw,34px)}
+.detail-side-arrow.next{right:clamp(12px,2.3vw,34px)}
+.detail-caption{position:absolute;left:clamp(22px,5vw,72px);bottom:25px;z-index:3;max-width:min(470px,52vw);padding:0;background:transparent}
+.detail-caption-kicker{font-size:8px;letter-spacing:.18em;color:#777;text-transform:uppercase}
+.detail-title{font:400 clamp(27px,3.1vw,43px)/1.03 Georgia,'Times New Roman',serif;letter-spacing:-.045em;margin:7px 0 0;overflow-wrap:anywhere}
+.detail-description{font-size:11px;line-height:1.8;color:#555;white-space:pre-wrap;margin:9px 0 0;max-width:400px}
+.detail-footer{position:absolute;right:clamp(22px,5vw,72px);bottom:28px;z-index:3;display:flex;align-items:center;gap:15px;color:#555;font-size:9px;letter-spacing:.12em}
+.detail-progress{width:clamp(35px,7vw,88px);height:1px;background:#d5d5d5;overflow:hidden}
+.detail-progress span{display:block;height:100%;width:0;background:#111;transition:width .25s ease}
+.detail-back{display:none}
+@media(max-width:700px){
+ .detail-canvas{min-height:420px}
+ .detail-top{left:18px;right:18px;top:15px}
+ .detail-artboard{inset:58px 18px 150px}
+ .detail-artboard img{max-height:100%;max-width:100%}
+ .detail-side-arrow{width:32px;height:32px;font-size:14px}
+ .detail-side-arrow.prev{left:10px}.detail-side-arrow.next{right:10px}
+ .detail-caption{left:20px;right:20px;bottom:65px;max-width:none}
+ .detail-title{font-size:30px}
+ .detail-description{font-size:10px;max-width:100%;margin-top:6px}
+ .detail-footer{right:20px;bottom:22px;gap:9px;font-size:8px}
+ .detail-progress{width:35px}
+}
+@media(max-width:700px){
+ .archive-modebar{align-items:flex-start;flex-direction:column;gap:7px}
+ .archive-stage{height:58vh;min-height:420px;max-height:560px}
+ .archive-item{width:clamp(142px,42vw,210px);gap:11px}
+ .archive-item .card-art{border-radius:14px}
+ .archive-stage-footer{align-items:center}
+ .carousel-footer-left{gap:9px}
+ .carousel-arrow{width:31px;height:31px}
+ .archive-stage-footer .drag-note{font-size:8px;letter-spacing:.06em}
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="header">
+    <a class="logo" href="#">HAESOL ARCHIVE</a>
+    <nav class="nav">
+      <a href="#">HOME</a>
+      <a href="#portfolio">PORTFOLIO</a>
+      <a href="#fan">FAN WORKS</a>
+      <a href="#scrapbook">SCRAPBOOK</a>
+      <a href="./settings.html">SETTING</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>HAESOL · DESIGN LIST</h1>
+      <p>기록하고, 정리하고, 디자인합니다.</p>
+      <div class="hero-meta">
+        <span>PERSONAL DESIGN ARCHIVE</span>
+        <span>03 CATEGORIES</span>
+      </div>
+    </section>
+
+    <section class="file-grid" id="portfolio">
+      <article class="file-card" data-type="portfolio">
+        <div class="folder">
+          <svg class="folder-shape" viewBox="0 0 410 340" preserveAspectRatio="none" aria-hidden="true">
+            <path class="folder-fill" d="M10 44V318Q10 328 20 328H390Q400 328 400 318V51Q400 44 393 44H183L166 13Q161 4 151 4H31Q10 4 10 25Z"/>
+          </svg>
+          <div class="folder-content">
+            <div class="file-no">01 / FILE</div>
+            <h2 class="file-title">PORTFOLIO</h2>
+            <p class="file-desc">프로덕트 디자인 작업을 모아두는 공간.</p>
+            <div class="file-bottom"><span id="portfolioFileCount">COMING LATER</span><span class="file-arrow">→</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="file-card" id="fan" data-type="fan">
+        <div class="folder">
+          <svg class="folder-shape" viewBox="0 0 410 340" preserveAspectRatio="none" aria-hidden="true">
+            <path class="folder-fill" d="M10 44V318Q10 328 20 328H390Q400 328 400 318V51Q400 44 393 44H183L166 13Q161 4 151 4H31Q10 4 10 25Z"/>
+          </svg>
+          <div class="folder-content">
+            <div class="file-no">02 / FILE</div>
+            <h2 class="file-title">FAN WORKS</h2>
+            <p class="file-desc">좋아하는 것들을 만들고 기록한 작업을 모아두는 공간.</p>
+            <div class="file-bottom"><span id="fanFileCount">05 FILES</span><span class="file-arrow">→</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="file-card" id="scrapbook" data-type="scrapbook">
+        <div class="folder">
+          <svg class="folder-shape" viewBox="0 0 410 340" preserveAspectRatio="none" aria-hidden="true">
+            <path class="folder-fill" d="M10 44V318Q10 328 20 328H390Q400 328 400 318V51Q400 44 393 44H183L166 13Q161 4 151 4H31Q10 4 10 25Z"/>
+          </svg>
+          <div class="folder-content">
+            <div class="file-no">03 / FILE</div>
+            <h2 class="file-title">SCRAPBOOK</h2>
+            <p class="file-desc">좋아했던 디자인과 이미지, 문장을 모아두는 공간.</p>
+            <div class="file-bottom"><span id="scrapbookFileCount">COMING LATER</span><span class="file-arrow">→</span></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="about">
+      <div>
+        <h2>ABOUT ME</h2>
+        <p>시각적으로 풀어내고, 정리하며, 의미 있는 순간들을 디자인으로 기록합니다. 작은 불편함을 관찰하고 더 나은 경험을 고민하는 프로덕트 디자이너를 준비하고 있습니다.</p>
+      </div>
+      <div class="meta-grid">
+        <div class="meta"><span>ROLE</span><strong>Product Designer</strong></div>
+        <div class="meta"><span>TOOLS</span><strong>Figma · Illustrator · Photoshop</strong></div>
+        <div class="meta"><span>ARCHIVE</span><strong>Portfolio · Fan · Scrapbook</strong></div>
+        <div class="meta"><span>CONTACT</span><strong>hello@haesol.design</strong></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 HAESOL ARCHIVE</span>
+      <span>PORTFOLIO / FAN WORKS / SCRAPBOOK</span>
+    </footer>
+  </main>
+</div>
+
+<div class="modal" id="archiveModal" aria-hidden="true">
+  <div class="modal-inner">
+    <div class="modal-head">
+      <div>
+        <div class="modal-kicker" id="archiveKicker">02 / FAN WORKS · 05 FILES</div>
+        <h2 id="archiveTitle">FAN WORKS</h2>
+      </div>
+      <button class="close" id="closeArchive" aria-label="목록 닫기">×</button>
+    </div>
+    <div class="archive-modebar">
+      <span class="label">SELECTED WORKS / <span id="archiveCategoryLabel">FAN WORKS</span></span>
+      <span class="hint">가운데 카드를 누르면 상세 작업이 열립니다</span>
+    </div>
+    <div class="archive-stage" id="archiveStage" aria-label="카드를 드래그하거나 좌우로 넘겨 작업 이미지 탐색" tabindex="0"></div>
+    <div class="archive-stage-footer">
+      <div class="carousel-footer-left">
+        <button class="carousel-arrow" id="archivePrev" type="button" aria-label="이전 이미지">←</button>
+        <div class="carousel-progress" aria-hidden="true"><span id="archiveProgress"></span></div>
+        <span id="archivePagination">00 — 00</span>
+        <button class="carousel-arrow" id="archiveNext" type="button" aria-label="다음 이미지">→</button>
+      </div>
+      <span class="drag-note">DRAG / SWIPE TO EXPLORE</span>
+    </div>
+    <p class="modal-copy" id="archiveCopy">카드를 좌우로 드래그하거나 넘겨서 탐색하세요. 중앙 카드를 선택하면 상세 작업을 확인할 수 있습니다.</p>
+    <div class="modal-meta"><span id="archiveFilesMeta">TYPE / ARCHIVE</span><span id="archiveStatusMeta">STATUS / COLLECTION</span><a href="./settings.html">IMAGE SETTINGS ↗</a></div>
+  </div>
+</div>
+
+<div class="detail-overlay" id="detailOverlay" aria-hidden="true">
+  <div class="detail-canvas" id="detailCanvas">
+    <div class="detail-top">
+      <span class="detail-index" id="detailKicker">02 / FAN WORKS · 01 — 05</span>
+      <button class="detail-close" id="detailClose" aria-label="상세 화면 닫기">CLOSE ×</button>
+    </div>
+    <button class="detail-side-arrow prev" id="detailPrev" type="button" aria-label="이전 작업">←</button>
+    <div class="detail-artboard"><img id="detailImage" alt=""></div>
+    <button class="detail-side-arrow next" id="detailNext" type="button" aria-label="다음 작업">→</button>
+    <div class="detail-caption">
+      <div class="detail-caption-kicker" id="detailCaptionKicker">SELECTED WORK / FAN WORKS</div>
+      <h2 class="detail-title" id="detailTitle">FAN WORK 01</h2>
+      <p class="detail-description" id="detailDescription" hidden></p>
+    </div>
+    <div class="detail-footer"><span id="detailPagination">01 — 05</span><span class="detail-progress"><span id="detailProgress"></span></span><span>← →</span></div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const CATEGORIES = {
+    'PORTFOLIO': { number:'01', type:'portfolio', description:'프로덕트 디자인 프로젝트를 기록합니다.', meta:'PRODUCT DESIGN' },
+    'FAN WORKS': { number:'02', type:'fan', description:'좋아하는 마음을 디자인으로 기록합니다.', meta:'FAN-MADE / GOODS' },
+    'SCRAPBOOK': { number:'03', type:'scrapbook', description:'마음에 남은 이미지와 문장을 수집합니다.', meta:'VISUAL NOTES' }
+  };
+  const DB_NAME = 'haesol-archive-settings';
+  const DB_STORE = 'settings';
+  const DB_KEY = 'main';
+  const DEFAULT_FAN_ITEMS = [
+    {id:'default-fan-01',category:'FAN WORKS',title:'FAN WORK 01',description:'',year:'2026',src:'assets/fan-01.png',x:24,y:27,size:100,rotation:-4,opacity:100,order:0},
+    {id:'default-fan-02',category:'FAN WORKS',title:'FAN WORK 02',description:'',year:'2026',src:'assets/fan-02.png',x:72,y:30,size:100,rotation:5,opacity:100,order:1},
+    {id:'default-fan-03',category:'FAN WORKS',title:'FAN WORK 03',description:'',year:'2026',src:'assets/fan-03.png',x:42,y:67,size:100,rotation:0,opacity:100,order:2},
+    {id:'default-fan-04',category:'FAN WORKS',title:'FAN WORK 04',description:'',year:'2026',src:'assets/fan-04.jpeg',x:19,y:73,size:100,rotation:4,opacity:100,order:3},
+    {id:'default-fan-05',category:'FAN WORKS',title:'FAN WORK 05',description:'',year:'2026',src:'assets/fan-05.jpeg',x:77,y:72,size:100,rotation:-3,opacity:100,order:4}
+  ];
+  let publishedSettings = null;
+  let localSettings = null;
+  let activeCategory = 'FAN WORKS';
+  let activeIndex = 0;
+  let dragStart = null;
+  let dragOffset = 0;
+  let dragMoved = false;
+  let suppressNextClick = false;
+  let wheelBlockedUntil = 0;
+  let activeItems = [];
+  let detailIndex = 0;
+  let archiveIsOpen = false;
+  const $ = id => document.getElementById(id);
+  const modal = $('archiveModal');
+  const detailOverlay = $('detailOverlay');
+  const stage = $('archiveStage');
+  const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+  function dbGet(){return new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){resolve(null);return;}
+    const req=indexedDB.open(DB_NAME,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(DB_STORE))req.result.createObjectStore(DB_STORE);};
+    req.onsuccess=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE)){resolve(null);db.close();return;}
+      const tx=db.transaction(DB_STORE,'readonly');const get=tx.objectStore(DB_STORE).get(DB_KEY);get.onsuccess=()=>{resolve(get.result||null);db.close();};get.onerror=()=>{reject(get.error);db.close();};};
+    req.onerror=()=>reject(req.error);
+  });}
+  async function loadPublishedSettings(){
+    try{const response=await fetch('./archive-data.json',{cache:'no-store'});if(!response.ok)return null;const data=await response.json();return data&&Array.isArray(data.items)?data:null;}
+    catch(e){return null;}
+  }
+  function parseItems(data,category){return (data?.items||[]).filter(item=>item&&item.category===category&&typeof item.src==='string').slice().sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));}
+  function itemsFor(category){
+    if(localSettings && (localSettings.hasLocalChanges===true || (Array.isArray(localSettings.items)&&localSettings.items.length>0))) return parseItems(localSettings,category);
+    if(publishedSettings) return parseItems(publishedSettings,category);
+    if(category==='FAN WORKS')return DEFAULT_FAN_ITEMS;
+    return [];
+  }
+  function updateCategoryCounts(){
+    const hasSettings=Boolean(localSettings&&(localSettings.hasLocalChanges===true||(localSettings.items||[]).length)||publishedSettings);
+    if(!hasSettings)return;
+    const countFor=category=>itemsFor(category).length;
+    const portfolio=countFor('PORTFOLIO'),fan=countFor('FAN WORKS'),scrapbook=countFor('SCRAPBOOK');
+    if($('portfolioFileCount'))$('portfolioFileCount').textContent=portfolio?String(portfolio).padStart(2,'0')+' FILES':'COMING LATER';
+    if($('fanFileCount'))$('fanFileCount').textContent=String(fan).padStart(2,'0')+' FILES';
+    if($('scrapbookFileCount'))$('scrapbookFileCount').textContent=scrapbook?String(scrapbook).padStart(2,'0')+' FILES':'COMING LATER';
+  }
+  function relativeOffset(index, center, total){
+    if(total<=1)return 0;
+    let delta=index-center;
+    if(delta>total/2)delta-=total;
+    if(delta< -total/2)delta+=total;
+    return delta;
+  }
+  function renderStage(){
+    activeItems=itemsFor(activeCategory);
+    if(activeIndex>=activeItems.length)activeIndex=Math.max(0,activeItems.length-1);
+    stage.innerHTML='';
+    stage.classList.remove('dragging');
+    dragStart=null;dragOffset=0;dragMoved=false;
+    if(!activeItems.length){
+      const empty=document.createElement('div');empty.className='archive-empty';
+      const title=document.createElement('strong');title.textContent='NO FILES YET';
+      const copy=document.createElement('span');copy.textContent='아직 등록한 작업이 없어요. 설정 페이지에서 이미지를 추가해 주세요.';
+      const link=document.createElement('a');link.href='./settings.html';link.className='mode-tab';link.textContent='OPEN IMAGE SETTINGS ↗';link.style.marginTop='8px';
+      empty.append(title,copy,link);stage.appendChild(empty);
+    }else{
+      activeItems.forEach((item,index)=>{
+        const button=document.createElement('button');button.type='button';button.className='archive-item';button.dataset.index=String(index);
+        button.setAttribute('aria-label',`${index+1}번 이미지: ${item.title||'FAN WORK'}. 중앙 카드는 클릭해 상세 보기, 옆 카드는 클릭해 선택`);
+        const art=document.createElement('span');art.className='card-art';
+        const img=document.createElement('img');img.src=item.src;img.alt=item.title||`Archive image ${index+1}`;img.draggable=false;img.loading=index>4?'lazy':'eager';
+        img.addEventListener('error',()=>{art.classList.add('image-missing');img.remove();const fallback=document.createElement('span');fallback.className='image-fallback';fallback.textContent='IMAGE FILE NOT FOUND';art.appendChild(fallback);},{once:true});
+        art.appendChild(img);
+        const caption=document.createElement('span');caption.className='archive-caption';caption.textContent=item.title||`IMAGE ${String(index+1).padStart(2,'0')}`;
+        button.append(art,caption);
+        button.addEventListener('click',event=>{
+          if(suppressNextClick){event.preventDefault();event.stopPropagation();return;}
+          const index=Number(button.dataset.index);
+          if(index!==activeIndex){activeIndex=index;updateCarousel();}
+          else openDetail(index);
+        });
+        stage.appendChild(button);
+      });
+      updateCarousel();
+    }
+    $('archiveKicker').textContent=`${CATEGORIES[activeCategory].number} / ${activeCategory} · ${String(activeItems.length).padStart(2,'0')} FILES`;
+    $('archiveTitle').textContent=activeCategory;$('archiveCategoryLabel').textContent=activeCategory;
+    $('archiveFilesMeta').textContent=`TYPE / ${CATEGORIES[activeCategory].meta}`;
+    $('archiveStatusMeta').textContent=`STATUS / ${activeItems.length?'ARCHIVE':'EMPTY COLLECTION'}`;
+    $('archiveCopy').textContent=activeItems.length?'카드를 좌우로 드래그하거나 스와이프해 탐색하세요. 중앙 카드를 클릭하면 작업 상세 정보가 열립니다.':CATEGORIES[activeCategory].description+' 설정 페이지에서 이미지를 추가할 수 있습니다.';
+  }
+  function updateCarousel(){
+    const slides=[...stage.querySelectorAll('.archive-item')];
+    const total=slides.length;
+    if(!total){$('archivePagination').textContent='00 — 00';$('archiveProgress').style.width='0%';return;}
+    const stageWidth=stage.clientWidth||900;
+    const step=clamp(stageWidth*.255,188,298);
+    slides.forEach((slide,index)=>{
+      const delta=relativeOffset(index,activeIndex,total);
+      const distance=Math.abs(delta);
+      const scale=distance===0?1:distance===1?.79:distance===2?.57:distance===3?.38:.25;
+      const rotation=distance===0?0:(delta>0?-1:1)*(distance===1?27:distance===2?39:48);
+      const offset=delta*step+dragOffset;
+      const opacity=distance===0?1:distance===1?.98:distance===2?.70:distance===3?.30:0;
+      slide.style.setProperty('--offset',`${offset}px`);
+      slide.style.setProperty('--rotation',`${rotation}deg`);
+      slide.style.setProperty('--scale',String(scale));
+      slide.style.zIndex=String(30-distance);
+      slide.style.opacity=String(opacity);
+      slide.style.pointerEvents=distance>3?'none':'auto';
+      slide.setAttribute('aria-current',String(index===activeIndex));
+      slide.setAttribute('tabindex',distance>2?'-1':'0');
+    });
+    $('archivePagination').textContent=`${String(activeIndex+1).padStart(2,'0')} — ${String(total).padStart(2,'0')}`;
+    $('archiveProgress').style.width=`${((activeIndex+1)/total)*100}%`;
+  }
+  function moveCarousel(direction){
+    const total=activeItems.length;if(total<2)return;
+    activeIndex=(activeIndex+direction+total)%total;dragOffset=0;updateCarousel();
+  }
+  function pointerDown(event){
+    if(!activeItems.length)return;
+    if(event.pointerType==='mouse'&&event.button!==0)return;
+    if(event.target.closest('a'))return;
+    dragStart={x:event.clientX,y:event.clientY,id:event.pointerId};dragOffset=0;dragMoved=false;
+    stage.classList.add('dragging');
+  }
+  function pointerMove(event){
+    if(!dragStart)return;
+    const dx=event.clientX-dragStart.x;const dy=event.clientY-dragStart.y;
+    if(!dragMoved&&Math.abs(dy)>Math.abs(dx)*1.3&&Math.abs(dy)>10&&event.pointerType!=='mouse'){
+      dragStart=null;stage.classList.remove('dragging');return;
+    }
+    if(Math.abs(dx)>5&&!dragMoved){dragMoved=true;try{stage.setPointerCapture(event.pointerId);}catch(e){}}
+    if(dragMoved){dragOffset=dx;updateCarousel();if(event.cancelable)event.preventDefault();}
+  }
+  function pointerUp(event){
+    if(!dragStart)return;
+    const dx=event.clientX-dragStart.x;const moved=dragMoved;
+    dragStart=null;stage.classList.remove('dragging');
+    try{if(stage.hasPointerCapture(event.pointerId))stage.releasePointerCapture(event.pointerId);}catch(e){}
+    if(moved){
+      suppressNextClick=true;window.setTimeout(()=>{suppressNextClick=false;},350);
+      const step=clamp((stage.clientWidth||900)*.255,188,298);
+      let steps=Math.round(-dx/step);
+      if(Math.abs(dx)>Math.min(56,step*.23)&&steps===0)steps=dx<0?1:-1;
+      if(steps!==0&&activeItems.length>1){activeIndex=(activeIndex+steps%activeItems.length+activeItems.length)%activeItems.length;}
+    }
+    dragOffset=0;updateCarousel();
+  }
+  function pointerCancel(event){
+    if(!dragStart)return;
+    dragStart=null;dragOffset=0;dragMoved=false;stage.classList.remove('dragging');
+    try{if(stage.hasPointerCapture(event.pointerId))stage.releasePointerCapture(event.pointerId);}catch(e){}
+    updateCarousel();
+  }
+  function openCategory(category){
+    activeCategory=category;activeIndex=0;archiveIsOpen=true;renderStage();
+    modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  }
+  function closeDetail(){detailOverlay.classList.remove('open');detailOverlay.setAttribute('aria-hidden','true');if(!archiveIsOpen)document.body.style.overflow='';}
+  function closeArchive(){closeDetail();modal.classList.remove('open');modal.setAttribute('aria-hidden','true');archiveIsOpen=false;document.body.style.overflow='';}
+  function openDetail(index){
+    if(!activeItems.length)return;detailIndex=(index+activeItems.length)%activeItems.length;renderDetail();detailOverlay.classList.add('open');detailOverlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  }
+  function renderDetail(){
+    const item=activeItems[detailIndex];if(!item)return;
+    $('detailImage').src=item.src;$('detailImage').alt=item.title||'';
+    const current=String(detailIndex+1).padStart(2,'0');
+    const total=String(activeItems.length).padStart(2,'0');
+    $('detailKicker').textContent=`${CATEGORIES[activeCategory].number} / ${activeCategory} · ${current} — ${total}`;
+    $('detailCaptionKicker').textContent=`SELECTED WORK / ${activeCategory}`;
+    $('detailTitle').textContent=item.title||`IMAGE ${current}`;
+    $('detailDescription').textContent=item.description||'';
+    $('detailDescription').hidden=!item.description;
+    $('detailPrev').disabled=activeItems.length<2;$('detailNext').disabled=activeItems.length<2;
+    $('detailPagination').textContent=`${current} — ${total}`;
+    $('detailProgress').style.width=`${activeItems.length?((detailIndex+1)/activeItems.length)*100:0}%`;
+  }
+  document.querySelectorAll('.file-card[data-type]').forEach(card=>card.addEventListener('click',()=>{
+    const category=card.dataset.type==='portfolio'?'PORTFOLIO':card.dataset.type==='fan'?'FAN WORKS':'SCRAPBOOK';openCategory(category);
+  }));
+  $('archivePrev').addEventListener('click',()=>moveCarousel(-1));
+  $('archiveNext').addEventListener('click',()=>moveCarousel(1));
+  stage.addEventListener('pointerdown',pointerDown);
+  stage.addEventListener('pointermove',pointerMove);
+  stage.addEventListener('pointerup',pointerUp);
+  stage.addEventListener('pointercancel',pointerCancel);
+  stage.addEventListener('lostpointercapture',()=>{if(dragStart)pointerCancel({pointerId:dragStart.id});});
+  stage.addEventListener('wheel',event=>{
+    if(activeItems.length<2)return;
+    const horizontal=Math.abs(event.deltaX)>Math.abs(event.deltaY)||event.shiftKey;
+    if(!horizontal||Date.now()<wheelBlockedUntil)return;
+    event.preventDefault();wheelBlockedUntil=Date.now()+360;moveCarousel((event.deltaX||event.deltaY)>0?1:-1);
+  },{passive:false});
+  $('closeArchive').addEventListener('click',closeArchive);
+  modal.addEventListener('click',event=>{if(event.target===modal)closeArchive();});
+  $('detailClose').addEventListener('click',closeDetail);
+  $('detailPrev').addEventListener('click',()=>{detailIndex=(detailIndex-1+activeItems.length)%activeItems.length;renderDetail();});
+  $('detailNext').addEventListener('click',()=>{detailIndex=(detailIndex+1)%activeItems.length;renderDetail();});
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){if(detailOverlay.classList.contains('open'))closeDetail();else if(archiveIsOpen)closeArchive();}
+    if(detailOverlay.classList.contains('open')&&activeItems.length>1){if(event.key==='ArrowLeft')$('detailPrev').click();if(event.key==='ArrowRight')$('detailNext').click();}
+    else if(archiveIsOpen&&activeItems.length>1){if(event.key==='ArrowLeft')moveCarousel(-1);if(event.key==='ArrowRight')moveCarousel(1);}
+  });
+  async function init(){
+    try{localSettings=await dbGet();}catch(e){localSettings=null;}
+    publishedSettings=await loadPublishedSettings();
+    updateCategoryCounts();
+  }
+  window.addEventListener('resize',()=>{if(archiveIsOpen)updateCarousel();});
+  init();
+})();
+</script>
+</body>
+</html>
