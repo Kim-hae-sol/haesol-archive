@@ -156,6 +156,52 @@ img{max-width:100%;display:block}
   .gallery{grid-template-columns:1fr}
   .modal-inner{width:calc(100% - 30px)}
 }
+
+/* Category archive viewer — same monochrome system as the homepage and settings. */
+.archive-modebar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:21px 0 14px;border-bottom:1px solid var(--line)}
+.archive-modebar .label{font-size:10px;letter-spacing:.12em;color:#666}
+.mode-tabs{display:flex;gap:7px;flex-wrap:wrap}
+.mode-tab{border:1px solid #bdbdbd;background:#fff;color:#111;border-radius:999px;padding:8px 16px;font-size:10px;letter-spacing:.04em}
+.mode-tab.active{background:#090909;color:#fff;border-color:#090909}
+.archive-stage{position:relative;margin-top:18px;height:clamp(470px,59vw,680px);min-height:470px;border:1px solid var(--line);overflow:hidden;background:#fff;isolation:isolate}
+.archive-item{position:absolute;display:block;border:1px solid #dedede;background:#fff;padding:0;overflow:hidden;box-shadow:none;cursor:pointer;transform-origin:center;transition:box-shadow .18s,border-color .18s}
+.archive-item:hover,.archive-item:focus-visible{z-index:40!important;border-color:#111;box-shadow:0 0 0 2px #fff,0 0 0 3px #111;outline:none}
+.archive-item img{display:block;width:100%;height:100%;object-fit:contain;background:#fff}
+.archive-item .archive-number{position:absolute;left:5px;top:5px;background:#fff;color:#111;padding:3px 5px;font-size:9px;letter-spacing:.08em}
+.archive-stage-footer{display:flex;justify-content:space-between;align-items:center;padding-top:13px;font-size:10px;color:#555;letter-spacing:.07em}
+.archive-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;color:#777;font-size:12px;padding:24px}
+.archive-empty strong{font:400 28px Georgia,'Times New Roman',serif;color:#111}
+.detail-overlay{position:fixed;inset:0;z-index:70;display:none;overflow:auto;background:#fff;color:#0a0a0a}
+.detail-overlay.open{display:block}
+.detail-shell{width:min(1320px,calc(100% - 64px));margin:0 auto;padding:25px 0 45px}
+.detail-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:15px;gap:20px}
+.detail-back,.detail-arrow{border:0;background:transparent;color:#111;padding:8px 0;font-size:11px;letter-spacing:.06em}
+.detail-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(250px,.6fr);gap:clamp(24px,5vw,72px);align-items:start;padding-top:30px}
+.detail-image-wrap{position:relative;min-height:320px;border:1px solid var(--line);background:#fff;display:grid;place-items:center}
+.detail-image-wrap img{width:100%;height:min(72vh,820px);object-fit:contain;background:#fff}
+.detail-side{padding-top:7px}
+.detail-kicker{font-size:10px;color:#777;letter-spacing:.13em}
+.detail-title{font:400 clamp(32px,4vw,55px)/1 Georgia,'Times New Roman',serif;letter-spacing:-.045em;margin:14px 0 0;overflow-wrap:anywhere}
+.detail-rule{width:42px;border-top:1px solid #111;margin:24px 0}
+.detail-description{font-size:13px;line-height:1.9;color:#505050;white-space:pre-wrap}
+.detail-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:25px}
+.detail-tag{border:1px solid #d3d3d3;border-radius:999px;padding:6px 10px;font-size:9px;color:#555}
+.detail-switcher{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:28px;padding-top:12px}
+.detail-thumbs{display:flex;gap:8px;overflow:auto;padding-top:18px}
+.detail-thumb{width:72px;height:78px;flex:none;border:1px solid #ddd;background:#fff;padding:0;cursor:pointer}
+.detail-thumb.active{border:2px solid #111}
+.detail-thumb img{width:100%;height:100%;object-fit:contain}
+.close{color:#111}
+@media(max-width:700px){
+ .archive-modebar{align-items:flex-start;flex-direction:column}
+ .mode-tabs{gap:5px}.mode-tab{padding:8px 12px}
+ .archive-stage{height:64vh;min-height:430px}
+ .detail-shell{width:calc(100% - 28px);padding-top:15px}
+ .detail-layout{grid-template-columns:1fr;gap:20px;padding-top:18px}
+ .detail-image-wrap img{height:56vh}
+ .detail-title{font-size:38px}
+}
+
 </style>
 </head>
 <body>
@@ -167,6 +213,7 @@ img{max-width:100%;display:block}
       <a href="#portfolio">PORTFOLIO</a>
       <a href="#fan">FAN WORKS</a>
       <a href="#scrapbook">SCRAPBOOK</a>
+      <a href="./settings.html">SETTING</a>
     </nav>
   </header>
 
@@ -190,7 +237,7 @@ img{max-width:100%;display:block}
             <div class="file-no">01 / FILE</div>
             <h2 class="file-title">PORTFOLIO</h2>
             <p class="file-desc">프로덕트 디자인 작업을 모아두는 공간.</p>
-            <div class="file-bottom"><span>COMING LATER</span><span class="file-arrow">→</span></div>
+            <div class="file-bottom"><span id="portfolioFileCount">COMING LATER</span><span class="file-arrow">→</span></div>
           </div>
         </div>
       </article>
@@ -204,7 +251,7 @@ img{max-width:100%;display:block}
             <div class="file-no">02 / FILE</div>
             <h2 class="file-title">FAN WORKS</h2>
             <p class="file-desc">좋아하는 것들을 만들고 기록한 작업을 모아두는 공간.</p>
-            <div class="file-bottom"><span>05 FILES</span><span class="file-arrow">→</span></div>
+            <div class="file-bottom"><span id="fanFileCount">05 FILES</span><span class="file-arrow">→</span></div>
           </div>
         </div>
       </article>
@@ -218,7 +265,7 @@ img{max-width:100%;display:block}
             <div class="file-no">03 / FILE</div>
             <h2 class="file-title">SCRAPBOOK</h2>
             <p class="file-desc">좋아했던 디자인과 이미지, 문장을 모아두는 공간.</p>
-            <div class="file-bottom"><span>COMING LATER</span><span class="file-arrow">→</span></div>
+            <div class="file-bottom"><span id="scrapbookFileCount">COMING LATER</span><span class="file-arrow">→</span></div>
           </div>
         </div>
       </article>
@@ -244,68 +291,204 @@ img{max-width:100%;display:block}
   </main>
 </div>
 
-<div class="modal" id="fanModal" aria-hidden="true">
+<div class="modal" id="archiveModal" aria-hidden="true">
   <div class="modal-inner">
     <div class="modal-head">
       <div>
-        <div class="modal-kicker">02 / FAN WORKS · 05 FILES</div>
-        <h2>FAN WORKS</h2>
+        <div class="modal-kicker" id="archiveKicker">02 / FAN WORKS · 05 FILES</div>
+        <h2 id="archiveTitle">FAN WORKS</h2>
       </div>
-      <button class="close" id="closeModal" aria-label="닫기">×</button>
+      <button class="close" id="closeArchive" aria-label="목록 닫기">×</button>
     </div>
-
-    <div class="gallery">
-      <figure><img class="tall" src="assets/fan-01.png" alt="팬 작업 1"></figure>
-      <figure><img class="tall" src="assets/fan-02.png" alt="팬 작업 2"></figure>
-      <figure><img src="assets/fan-03.png" alt="팬 작업 3"></figure>
-      <figure><img src="assets/fan-04.jpeg" alt="팬 작업 4"></figure>
-      <figure><img src="assets/fan-05.jpeg" alt="팬 작업 5"></figure>
+    <div class="archive-modebar">
+      <span class="label">SELECTED WORKS / <span id="archiveCategoryLabel">FAN WORKS</span></span>
+      <div class="mode-tabs" role="group" aria-label="이미지 배치 방식">
+        <button class="mode-tab active" data-view-mode="FLAT" aria-pressed="true">FLAT</button>
+        <button class="mode-tab" data-view-mode="TILT" aria-pressed="false">TILT</button>
+        <button class="mode-tab" data-view-mode="RING" aria-pressed="false">RING</button>
+        <button class="mode-tab" data-view-mode="GALLERY" aria-pressed="false">GALLERY</button>
+      </div>
     </div>
+    <div class="archive-stage" id="archiveStage" aria-label="작업 이미지 목록"></div>
+    <div class="archive-stage-footer"><span>CLICK AN IMAGE TO EXPLORE</span><span id="archivePagination">00 — 00</span></div>
+    <p class="modal-copy" id="archiveCopy">이미지를 선택하면 작업의 상세 정보를 확인할 수 있습니다.</p>
+    <div class="modal-meta"><span id="archiveFilesMeta">TYPE / ARCHIVE</span><span id="archiveStatusMeta">STATUS / COLLECTION</span><a href="./settings.html">IMAGE SETTINGS ↗</a></div>
+  </div>
+</div>
 
-    <p class="modal-copy">현재는 팬 작업부터 차곡차곡 기록합니다. 각 작업에는 나중에 작업 의도, 제작 과정, 사용 툴과 세부 내용을 추가할 수 있습니다.</p>
-    <div class="modal-meta">
-      <span>TYPE / FAN-MADE</span><span>FILES / 05</span><span>STATUS / ARCHIVE</span>
+<div class="detail-overlay" id="detailOverlay" aria-hidden="true">
+  <div class="detail-shell">
+    <div class="detail-top">
+      <button class="detail-back" id="detailBack">← BACK TO LIST</button>
+      <span class="modal-kicker">HAESOL ARCHIVE / WORK DETAIL</span>
+      <button class="detail-back" id="detailClose" aria-label="상세 화면 닫기">CLOSE ×</button>
+    </div>
+    <div class="detail-layout">
+      <div>
+        <div class="detail-image-wrap"><img id="detailImage" alt=""></div>
+        <div class="detail-thumbs" id="detailThumbs"></div>
+      </div>
+      <aside class="detail-side">
+        <div class="detail-kicker" id="detailKicker">02 / FAN WORKS</div>
+        <h2 class="detail-title" id="detailTitle">FAN WORK 01</h2>
+        <div class="detail-rule"></div>
+        <p class="detail-description" id="detailDescription">작업 설명이 이곳에 표시됩니다.</p>
+        <div class="detail-tags" id="detailTags"></div>
+        <div class="detail-switcher"><button class="detail-arrow" id="detailPrev">← PREVIOUS</button><button class="detail-arrow" id="detailNext">NEXT →</button></div>
+      </aside>
     </div>
   </div>
 </div>
 
 <script>
-const modal = document.getElementById('fanModal');
-const closeButton = document.getElementById('closeModal');
-
-document.querySelector('[data-type="fan"]').addEventListener('click', () => {
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden','false');
-});
-
-closeButton.addEventListener('click', () => {
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden','true');
-});
-
-modal.addEventListener('click', (e) => {
-  if(e.target === modal){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
+(() => {
+  const CATEGORIES = {
+    'PORTFOLIO': { number:'01', type:'portfolio', description:'프로덕트 디자인 프로젝트를 기록합니다.', meta:'PRODUCT DESIGN' },
+    'FAN WORKS': { number:'02', type:'fan', description:'좋아하는 마음을 디자인으로 기록합니다.', meta:'FAN-MADE / GOODS' },
+    'SCRAPBOOK': { number:'03', type:'scrapbook', description:'마음에 남은 이미지와 문장을 수집합니다.', meta:'VISUAL NOTES' }
+  };
+  const MODES = ['FLAT','TILT','RING','GALLERY'];
+  const DB_NAME = 'haesol-archive-settings';
+  const DB_STORE = 'settings';
+  const DB_KEY = 'main';
+  const DEFAULT_FAN_ITEMS = [
+    {id:'default-fan-01',category:'FAN WORKS',title:'FAN WORK 01',description:'',year:'2026',src:'assets/fan-01.png',x:24,y:27,size:100,rotation:-4,opacity:100,order:0},
+    {id:'default-fan-02',category:'FAN WORKS',title:'FAN WORK 02',description:'',year:'2026',src:'assets/fan-02.png',x:72,y:30,size:100,rotation:5,opacity:100,order:1},
+    {id:'default-fan-03',category:'FAN WORKS',title:'FAN WORK 03',description:'',year:'2026',src:'assets/fan-03.png',x:42,y:67,size:100,rotation:0,opacity:100,order:2},
+    {id:'default-fan-04',category:'FAN WORKS',title:'FAN WORK 04',description:'',year:'2026',src:'assets/fan-04.jpeg',x:19,y:73,size:100,rotation:4,opacity:100,order:3},
+    {id:'default-fan-05',category:'FAN WORKS',title:'FAN WORK 05',description:'',year:'2026',src:'assets/fan-05.jpeg',x:77,y:72,size:100,rotation:-3,opacity:100,order:4}
+  ];
+  let publishedSettings = null;
+  let localSettings = null;
+  let activeCategory = 'FAN WORKS';
+  let activeMode = 'FLAT';
+  let activeItems = [];
+  let detailIndex = 0;
+  let archiveIsOpen = false;
+  const $ = id => document.getElementById(id);
+  const modal = $('archiveModal');
+  const detailOverlay = $('detailOverlay');
+  const stage = $('archiveStage');
+  const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+  function dbGet(){return new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){resolve(null);return;}
+    const req=indexedDB.open(DB_NAME,1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(DB_STORE))req.result.createObjectStore(DB_STORE);};
+    req.onsuccess=()=>{const db=req.result;if(!db.objectStoreNames.contains(DB_STORE)){resolve(null);db.close();return;}
+      const tx=db.transaction(DB_STORE,'readonly');const get=tx.objectStore(DB_STORE).get(DB_KEY);get.onsuccess=()=>{resolve(get.result||null);db.close();};get.onerror=()=>{reject(get.error);db.close();};};
+    req.onerror=()=>reject(req.error);
+  });}
+  async function loadPublishedSettings(){
+    try{const response=await fetch('./archive-data.json',{cache:'no-store'});if(!response.ok)return null;const data=await response.json();return data&&Array.isArray(data.items)?data:null;}
+    catch(e){return null;}
   }
-});
-
-document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape'){
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden','true');
+  function parseItems(data,category){return (data?.items||[]).filter(item=>item&&item.category===category&&typeof item.src==='string').slice().sort((a,b)=>(Number(a.order)||0)-(Number(b.order)||0));}
+  function itemsFor(category){
+    if(localSettings && (localSettings.hasLocalChanges===true || (Array.isArray(localSettings.items)&&localSettings.items.length>0))) return parseItems(localSettings,category);
+    if(publishedSettings) return parseItems(publishedSettings,category);
+    if(category==='FAN WORKS')return DEFAULT_FAN_ITEMS;
+    return [];
   }
-});
-
-document.querySelector('[data-type="portfolio"]').addEventListener('click', (e) => {
-  e.preventDefault();
-  alert('포트폴리오는 나중에 천천히 채울 예정이에요.');
-});
-
-document.querySelector('[data-type="scrapbook"]').addEventListener('click', (e) => {
-  e.preventDefault();
-  alert('스크랩북은 나중에 천천히 채울 예정이에요.');
-});
+  function modeForCategory(category){
+    const data=(localSettings && (localSettings.hasLocalChanges===true || (Array.isArray(localSettings.items)&&localSettings.items.length>0)))?localSettings:publishedSettings;
+    const mode=data?.modes?.[category];return MODES.includes(mode)?mode:'FLAT';
+  }
+  function updateCategoryCounts(){
+    const hasSettings=Boolean(localSettings&&(localSettings.hasLocalChanges===true||(localSettings.items||[]).length)||publishedSettings);
+    if(!hasSettings)return;
+    const countFor=category=>itemsFor(category).length;
+    const portfolio=countFor('PORTFOLIO'),fan=countFor('FAN WORKS'),scrapbook=countFor('SCRAPBOOK');
+    if($('portfolioFileCount'))$('portfolioFileCount').textContent=portfolio?String(portfolio).padStart(2,'0')+' FILES':'COMING LATER';
+    if($('fanFileCount'))$('fanFileCount').textContent=String(fan).padStart(2,'0')+' FILES';
+    if($('scrapbookFileCount'))$('scrapbookFileCount').textContent=scrapbook?String(scrapbook).padStart(2,'0')+' FILES':'COMING LATER';
+  }
+  function getLayout(item,index,items,mode){
+    let x=Number.isFinite(Number(item.x))?Number(item.x):20+(index%3)*30;
+    let y=Number.isFinite(Number(item.y))?Number(item.y):22+(Math.floor(index/3)%3)*27;
+    let rotation=Number(item.rotation)||0;
+    let width=clamp(22*(Number(item.size)||100)/100,13,38);
+    if(mode==='RING'){
+      const angle=(-90+index*(360/Math.max(items.length,1)))*Math.PI/180;
+      x=50+33*Math.cos(angle);y=50+33*Math.sin(angle);rotation=angle*180/Math.PI+90;width=clamp(21*(Number(item.size)||100)/100,13,30);
+    }else if(mode==='GALLERY'){
+      const cols=Math.min(4,Math.max(1,Math.ceil(Math.sqrt(items.length*1.25))));
+      const rows=Math.max(1,Math.ceil(items.length/cols));
+      x=((index%cols)+.5)*100/cols;y=(Math.floor(index/cols)+.5)*100/rows;rotation=0;width=Math.min(88/cols,30)*(Number(item.size)||100)/100;
+    }else if(mode==='TILT'){
+      rotation += index%2===0?-6:6;
+    }
+    return {x:clamp(x,3,97),y:clamp(y,5,95),rotation,width:clamp(width,12,40),opacity:clamp(Number(item.opacity)||100,20,100)};
+  }
+  function renderStage(){
+    activeItems=itemsFor(activeCategory);
+    stage.innerHTML='';
+    if(!activeItems.length){
+      const empty=document.createElement('div');empty.className='archive-empty';
+      const title=document.createElement('strong');title.textContent='NO FILES YET';
+      const copy=document.createElement('span');copy.textContent='아직 등록한 작업이 없어요. 설정 페이지에서 이미지를 추가해 주세요.';
+      const link=document.createElement('a');link.href='./settings.html';link.className='mode-tab';link.textContent='OPEN IMAGE SETTINGS ↗';link.style.marginTop='8px';
+      empty.append(title,copy,link);stage.appendChild(empty);
+    }else{
+      activeItems.forEach((item,index)=>{
+        const pos=getLayout(item,index,activeItems,activeMode);
+        const button=document.createElement('button');button.type='button';button.className='archive-item';button.dataset.index=String(index);
+        button.setAttribute('aria-label',`${index+1}번 이미지 상세 보기: ${item.title||'FAN WORK'}`);
+        button.style.width=pos.width+'%';button.style.height='auto';button.style.aspectRatio='4 / 5';
+        button.style.left=`calc(${pos.x}% - ${pos.width/2}%)`;button.style.top=`calc(${pos.y}% - ${Math.min(pos.width*1.25,56)/2}%)`;
+        button.style.transform=`rotate(${pos.rotation}deg)`;button.style.opacity=String(pos.opacity/100);button.style.zIndex=String(2+(Number(item.order)||index));
+        const img=document.createElement('img');img.src=item.src;img.alt=item.title||`Archive image ${index+1}`;img.loading=index>5?'lazy':'eager';
+        const num=document.createElement('span');num.className='archive-number';num.textContent=String(index+1).padStart(2,'0');
+        button.append(img,num);button.addEventListener('click',()=>openDetail(index));stage.appendChild(button);
+      });
+    }
+    $('archiveKicker').textContent=`${CATEGORIES[activeCategory].number} / ${activeCategory} · ${String(activeItems.length).padStart(2,'0')} FILES`;
+    $('archiveTitle').textContent=activeCategory;$('archiveCategoryLabel').textContent=activeCategory;
+    $('archivePagination').textContent=`${String(activeItems.length?1:0).padStart(2,'0')} — ${String(activeItems.length).padStart(2,'0')}`;
+    $('archiveFilesMeta').textContent=`TYPE / ${CATEGORIES[activeCategory].meta}`;
+    $('archiveStatusMeta').textContent=`STATUS / ${activeItems.length?'ARCHIVE':'EMPTY COLLECTION'}`;
+    $('archiveCopy').textContent=CATEGORIES[activeCategory].description+' 이미지를 클릭하면 작업 상세 정보를 확인할 수 있습니다.';
+    document.querySelectorAll('[data-view-mode]').forEach(btn=>{const active=btn.dataset.viewMode===activeMode;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active));});
+  }
+  function openCategory(category){
+    activeCategory=category;activeMode=modeForCategory(category);archiveIsOpen=true;renderStage();
+    modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  }
+  function closeDetail(){detailOverlay.classList.remove('open');detailOverlay.setAttribute('aria-hidden','true');}
+  function closeArchive(){closeDetail();modal.classList.remove('open');modal.setAttribute('aria-hidden','true');archiveIsOpen=false;document.body.style.overflow='';}
+  function openDetail(index){
+    if(!activeItems.length)return;detailIndex=(index+activeItems.length)%activeItems.length;renderDetail();detailOverlay.classList.add('open');detailOverlay.setAttribute('aria-hidden','false');
+  }
+  function renderDetail(){
+    const item=activeItems[detailIndex];if(!item)return;
+    $('detailImage').src=item.src;$('detailImage').alt=item.title||'';
+    $('detailKicker').textContent=`${CATEGORIES[activeCategory].number} / ${activeCategory} · ${String(detailIndex+1).padStart(2,'0')} OF ${String(activeItems.length).padStart(2,'0')}`;
+    $('detailTitle').textContent=item.title||`IMAGE ${String(detailIndex+1).padStart(2,'0')}`;
+    $('detailDescription').textContent=item.description||'작업 설명이 아직 등록되지 않았습니다.';
+    $('detailTags').innerHTML='';
+    [activeCategory,item.year||'YEAR —',CATEGORIES[activeCategory].meta].forEach(tag=>{const el=document.createElement('span');el.className='detail-tag';el.textContent=tag;$('detailTags').appendChild(el);});
+    $('detailPrev').disabled=activeItems.length<2;$('detailNext').disabled=activeItems.length<2;
+    $('detailThumbs').innerHTML='';activeItems.forEach((work,i)=>{const b=document.createElement('button');b.type='button';b.className='detail-thumb'+(i===detailIndex?' active':'');b.setAttribute('aria-label',`이미지 ${i+1} 보기`);const image=document.createElement('img');image.src=work.src;image.alt='';b.appendChild(image);b.addEventListener('click',()=>{detailIndex=i;renderDetail();});$('detailThumbs').appendChild(b);});
+  }
+  document.querySelectorAll('.file-card[data-type]').forEach(card=>card.addEventListener('click',()=>{
+    const category=card.dataset.type==='portfolio'?'PORTFOLIO':card.dataset.type==='fan'?'FAN WORKS':'SCRAPBOOK';openCategory(category);
+  }));
+  document.querySelectorAll('[data-view-mode]').forEach(btn=>btn.addEventListener('click',()=>{activeMode=btn.dataset.viewMode;renderStage();}));
+  $('closeArchive').addEventListener('click',closeArchive);
+  modal.addEventListener('click',event=>{if(event.target===modal)closeArchive();});
+  $('detailBack').addEventListener('click',closeDetail);$('detailClose').addEventListener('click',closeDetail);
+  $('detailPrev').addEventListener('click',()=>{detailIndex=(detailIndex-1+activeItems.length)%activeItems.length;renderDetail();});
+  $('detailNext').addEventListener('click',()=>{detailIndex=(detailIndex+1)%activeItems.length;renderDetail();});
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){if(detailOverlay.classList.contains('open'))closeDetail();else if(archiveIsOpen)closeArchive();}
+    if(detailOverlay.classList.contains('open')&&activeItems.length>1){if(event.key==='ArrowLeft')$('detailPrev').click();if(event.key==='ArrowRight')$('detailNext').click();}
+  });
+  async function init(){
+    try{localSettings=await dbGet();}catch(e){localSettings=null;}
+    publishedSettings=await loadPublishedSettings();
+    updateCategoryCounts();
+  }
+  init();
+})();
 </script>
 </body>
 </html>

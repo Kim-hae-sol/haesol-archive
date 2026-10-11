@@ -1,0 +1,82 @@
+{
+  "app": "HAESOL ARCHIVE IMAGE SETTINGS",
+  "version": 1,
+  "activeCategory": "FAN WORKS",
+  "modes": {
+    "PORTFOLIO": "FLAT",
+    "FAN WORKS": "FLAT",
+    "SCRAPBOOK": "FLAT"
+  },
+  "items": [
+    {
+      "id": "fan-01",
+      "category": "FAN WORKS",
+      "title": "FAN WORK 01",
+      "description": "",
+      "year": "2026",
+      "src": "assets/fan-01.png",
+      "x": 24,
+      "y": 27,
+      "size": 100,
+      "rotation": -4,
+      "opacity": 100,
+      "order": 0
+    },
+    {
+      "id": "fan-02",
+      "category": "FAN WORKS",
+      "title": "FAN WORK 02",
+      "description": "",
+      "year": "2026",
+      "src": "assets/fan-02.png",
+      "x": 72,
+      "y": 30,
+      "size": 100,
+      "rotation": 5,
+      "opacity": 100,
+      "order": 1
+    },
+    {
+      "id": "fan-03",
+      "category": "FAN WORKS",
+      "title": "FAN WORK 03",
+      "description": "",
+      "year": "2026",
+      "src": "assets/fan-03.png",
+      "x": 42,
+      "y": 67,
+      "size": 100,
+      "rotation": 0,
+      "opacity": 100,
+      "order": 2
+    },
+    {
+      "id": "fan-04",
+      "category": "FAN WORKS",
+      "title": "FAN WORK 04",
+      "description": "",
+      "year": "2026",
+      "src": "assets/fan-04.jpeg",
+      "x": 19,
+      "y": 73,
+      "size": 100,
+      "rotation": 4,
+      "opacity": 100,
+      "order": 3
+    },
+    {
+      "id": "fan-05",
+      "category": "FAN WORKS",
+      "title": "FAN WORK 05",
+      "description": "",
+      "year": "2026",
+      "src": "assets/fan-05.jpeg",
+      "x": 77,
+      "y": 72,
+      "size": 100,
+      "rotation": -3,
+      "opacity": 100,
+      "order": 4
+    }
+  ]
+}
